@@ -4,9 +4,9 @@ import cross_icon from '../../assets/cross_icon.png'
 
 const ListProduct = () => {
     const [allproducts, setAllProducts] = useState([]);
-
+    const BASE_URL = import.meta.env.VITE_BACKEND_URL
     const fetchInfo = async()=>{
-        await fetch('http://localhost:4000/allproducts')
+        await fetch(BASE_URL+'/allproducts')
         .then((res)=> 
          res.json())
         .then((data) => {
@@ -16,7 +16,7 @@ const ListProduct = () => {
 
       const removeProduct = async(id) =>{
 
-        await fetch("http://localhost:4000/removeproduct/", {
+        await fetch(BASE_URL+"/removeproduct/", {
           method : 'POST',
           headers : {
             Accept : 'application/json',
@@ -50,7 +50,7 @@ const ListProduct = () => {
             allproducts.map((product, index)=>{
               return <div key= {index}>
               <div  className="listproduct-format-main listproduct-format">
-                   <img src={product.image} className='listproduct-product-icon' />
+                   <img src={BASE_URL+product.image} className='listproduct-product-icon' />
                    <p>{product.name}</p>
                    <p>${product.old_price}</p>
                    <p>${product.new_price}</p>
