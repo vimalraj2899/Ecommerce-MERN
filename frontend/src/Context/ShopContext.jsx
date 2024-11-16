@@ -2,6 +2,9 @@ import React, { createContext, useEffect, useState } from 'react'
 
 export const ShopContext = createContext(null);
 
+const apiUrl = process.env.REACT_APP_BACKEND_URL;
+console.log('Api Url '+apiUrl); 
+
 const getdefaultCart = () =>{
     let cart = {};
     for(let index =0; index < 300+1;index++){
@@ -18,7 +21,7 @@ const ShopContextProvider = (props) =>{
 
     useEffect(()=>{
         debugger;
-        fetch('http://localhost:4000/allproducts')
+        fetch(`${apiUrl}/allproducts`)
         .then((res)=>res.json())
         .then((data)=> {
             console.log(data)
@@ -26,7 +29,7 @@ const ShopContextProvider = (props) =>{
         });
          debugger;
         if(localStorage.getItem('auth-token')){
-            fetch('http://localhost:4000/getcart',{
+            fetch(`${apiUrl}/getcart`,{
                 method : 'POST',
                 headers : {
                     Accept : 'application/form-data',
@@ -45,7 +48,7 @@ const ShopContextProvider = (props) =>{
             ...prev, [itemId]:prev[itemId]+1
           }))
           if(localStorage.getItem('auth-token')){
-            fetch('http://localhost:4000/addtocart', {
+            fetch(`${apiUrl}/addtocart`, {
                 method : 'POST',
                 headers : {
                     Accept : 'application/form-data',
@@ -65,7 +68,7 @@ const ShopContextProvider = (props) =>{
             ...prev, [itemId]:prev[itemId]-1
         }))
         if(localStorage.getItem('auth-token')){
-            fetch('http://localhost:4000/removefromcart', {
+            fetch(`${apiUrl}removefromcart`, {
                 method : 'POST',
                 headers : {
                     Accept : 'application/form-data',
@@ -102,7 +105,7 @@ const ShopContextProvider = (props) =>{
         return totalItem;
     }
 
-    const contextValue = { all_product, cartItems, addToCart, removeFromCart, getTotalCartAmount, getTotalCartItems }
+    const contextValue = { all_product, cartItems, addToCart, removeFromCart, getTotalCartAmount, getTotalCartItems, apiUrl }
 
     return (
         <ShopContext.Provider value={contextValue}>

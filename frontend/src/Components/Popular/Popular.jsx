@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import './Popular.css'
+import { ShopContext } from '../../Context/ShopContext'
 import Item from '../Item/Item'
 
 const Popular = () => {
    const [popularProducts, setPopularProducts] = useState([]);
+   const {apiUrl} = useContext(ShopContext)
 
    useEffect(()=>{
-         fetch('http://localhost:4000/popularinwomen')
+         fetch(`${apiUrl}/popularinwomen`)
          .then((res)=> res.json())
          .then((data)=>setPopularProducts(data))
    }, [])

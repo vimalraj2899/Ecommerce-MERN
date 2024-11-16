@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import './CSS/LoginSignup.css'
+import { ShopContext } from '../Context/ShopContext'
 
 const LoginSignup = () => {
     
   const [state, setState] = useState('Login')
+  const {apiUrl} = useContext(ShopContext)
   const [formData, setFormData] = useState({
     username : '',
     email: '',
@@ -20,7 +22,7 @@ const LoginSignup = () => {
   const login = async()=>{
       console.log('Login', formData)
       let responseData;
-      await fetch('http://localhost:4000/login', {
+      await fetch(`${apiUrl}/login`, {
         method : 'POST',
         headers : {
           Accept : 'application/form-data',
@@ -40,7 +42,7 @@ const LoginSignup = () => {
   const signup = async()=>{
     console.log('Signup', formData)
     let responseData;
-    await fetch('http://localhost:4000/signup', {
+    await fetch(`${apiUrl}/signup`, {
       method : 'POST',
       headers : {
         Accept : 'application/form-data',
